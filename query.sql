@@ -119,6 +119,28 @@ CREATE TABLE Ball_By_Ball(
 
 \copy Ball_By_Ball(MatcH_id,Over_id,Ball_id,Innings_No,Team_Batting,Team_Bowling,Striker_Batting_Position,Extra_Type,Runs_Scored,Extra_runs,Wides,Legbyes,Byes,Noballs,Penalty,Bowler_Extras,Out_type,Caught,Bowled,Run_out,LBW,Retired_hurt,Stumped,caught_and_bowled,hit_wicket,ObstructingFeild,Bowler_Wicket,Match_Date,Season,Striker,Non_Striker,Bowler,Player_Out,Fielders,Striker_match_SK,StrikerSK,NonStriker_match_SK,NONStriker_SK,Fielder_match_SK,Fielder_SK,Bowler_match_SK,BOWLER_SK,PlayerOut_match_SK,BattingTeam_SK,BowlingTeam_SK,Keeper_Catch,Player_out_sk,MatchDateSK) FROM '/home/kailash/Desktop/6th_Sem/dbms/Project/ipl-data-till-2017/Ball_By_Ball.csv' DELIMITER ',' CSV HEADER;
 
+ALTER TABLE TEAM DROP TEAM_SK;
+
+ALTER TABLE PLAYER DROP PLAYER_SK;
+
+CREATE TABLE VENUE AS select Distinct(Venue_Name),City_Name,Country_Name from match order by country_name,City_name;  
+
+ALTER TABLE match drop Country_id,drop Country_Name,drop City_Name, drop Match_SK;
+
+Create Table temp_table AS select match_id,player_id,role_desc,player_team from player_match;
+
+drop table player_match;
+
+ALTER TABLE temp_table RENAME TO player_match;
+
+CREATE TABLE match_by_team AS SELECT Match_id,Innings_No,Team_batting,Team_bowling from ball_by_ball;
+
+CREATE TABLE temp2_table AS SELECT match_id, over_id, ball_id, innings_no, striker_batting_position, extra_type,runs_scored, extra_runs, out_type, striker, non_striker, bowler, player_out,fielders as fielder,Bowler_Wicket from ball_by_ball;
+
+drop table ball_by_ball;
+
+ALTER TABLE temp2_table RENAME TO ball_by_ball;
+
 -- xtra queries
 SELECT country_name
 FROM player
