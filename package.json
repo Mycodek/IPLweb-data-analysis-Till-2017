@@ -1,0 +1,30 @@
+{
+  "name": "soccer",
+  "version": "1.0.0",
+  "description": "dbms project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://https://github.com/Mycodek/IPLweb-data-analysis-Till-2017.git"
+  },
+  "keywords": [
+    "node",
+    "npm"
+  ],
+  "author": "kailash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://https://github.com/Mycodek/IPLweb-data-analysis-Till-2017/issues"
+  },
+  "homepage": "https://https://github.com/Mycodek/IPLweb-data-analysis-Till-2017#readme",
+  "dependencies": {
+    "cat-me": "^1.0.3",
+    "ejs": "^3.0.1",
+    "ejs-lint": "^1.0.1",
+    "express": "^4.17.1",
+    "pg": "^7.18.2"
+  }
+}

@@ -1,0 +1,49 @@
+.bg-3 { 
+    background-color: #ffffff;
+    color: #555555;
+}
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+.navbar-nav  li a:hover {
+    color: #1abc9c !important;
+}
+.active>a {
+  color: #1abc9c !important;;
+}
+/* styling in index.ejs */
+.center {
+    display: inline-block;
+    vertical-align: text-bottom;
+    text-align: left;
+    margin: 0 auto;
+    min-width: 1183px;
+}
+.container {
+display: flex;
+background-color: #555555;
+text-align: center;
+border: 3px solid green;
+}
+.container.space-around {
+justify-content: space-around;
+flex-direction: row;
+}
+/* 0000000000000000000000000000000000000 */
+.select2-container .select2-selection--single{
+    height:30px !important;
+}
+.select2-container--default .select2-selection--single{
+    border: 1px solid #ccc !important; 
+    border-radius: 0px !important; 
+}
