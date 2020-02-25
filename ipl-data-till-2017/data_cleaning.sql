@@ -14,7 +14,7 @@ ALTER TABLE temp_table RENAME TO player_match;
 
 CREATE TABLE match_by_team AS SELECT Match_id,Innings_No,Team_batting,Team_bowling from ball_by_ball;
 
-CREATE TABLE temp2_table AS SELECT match_id, over_id, ball_id, innings_no, striker_batting_position, extra_type,runs_scored, extra_runs, out_type, striker, non_striker, bowler, player_out,fielders as fielder from ball_by_ball;
+CREATE TABLE temp2_table AS SELECT match_id, over_id, ball_id, innings_no, striker_batting_position, extra_type,runs_scored, extra_runs, out_type, striker, non_striker, bowler, player_out,fielders as fielder,Bowler_Wicket from ball_by_ball;
 
 drop table ball_by_ball;
 
