@@ -1,44 +1,75 @@
+// library included
 const {Client} = require('pg');
 const ejsLint = require('ejs-lint');
 const fs = require('fs');
 const express = require('express');
 var catme  = require('cat-me');
-// var index = require('./routes/index');
 const queries = require('./queries.js');
+var bodyParser = require('body-parser')
 
-var person1 = new queries();
-console.log(person1.sp_byName("SC Ganguly"));
-
+// intialization
 const app = new express();
+var Qrs = new queries();
+
+// setup
 app.set('view engine', 'ejs');
+// var urlencodedParser = 
+app.use(bodyParser.urlencoded({ extended: true }))
+// var jsonParser = bodyParser.json()
+// app.use(bodyParser.text({ type: 'text/html' }));
+
+// client connection
 let port = 8080;
 const client = new Client({
     // connectionString : connection_String
     user: 'postgres',
     host: 'localhost',
     database: 'mydatabase',
-    password: 'XXXXXXX',
+    password: 'XXXXXX',
     port: 5432,
 });
 client.connect();
 
-app.get("/",async function(_err,result){
+// routing
+let searchedP = 'all';
+
+app.get("/",async function(req,res){
     try{
+        qmain = Qrs.sp_byName('V Kohli');
+        console.log(searchedP);
+        if (searchedP != 'all'){
+            console.log("check");
+            qmain = Qrs.sp_byName(searchedP);
+        }
+        const PlayerResult = await client.query(qmain);
         const tabresult = await client.query('SELECT * FROM team');
-        result.render("index.ejs",{title : "Home",resTable:tabresult.rows});
+        res.render("index.ejs",{title:'players',pdata : PlayerResult.rows[0],resTable:tabresult.rows});
     }
     catch(err){
     }
 });
 
-app.get("/Players",async function(_err,result){
+app.get("/Players",async function(req,res){
     try{
+        qmain = Qrs.sp_byName('V Kohli');
+        console.log(searchedP);
+        if (searchedP != 'all'){
+            console.log("check");
+            qmain = Qrs.sp_byName(searchedP);
+        }
+        const PlayerResult = await client.query(qmain);
         const tabresult = await client.query('SELECT * FROM team');
-        result.render("index.ejs",{title : "Players",resTable:tabresult.rows});
+        res.render("index.ejs",{title:'players',pdata : PlayerResult.rows[0],resTable:tabresult.rows});
     }
     catch(err){
         console.log("In catch");
     }
+});
+app.post('/search-player',async function(req,res){
+    // var post_data = req.body;
+    console.log(req.body.name);
+    searchedP = req.body.name;
+    return res.redirect('/Players');
 });
 
 app.get("/Teams",async function(_err,result){
