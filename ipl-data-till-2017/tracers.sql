@@ -32,4 +32,4 @@ select a1.sum,player_name from
 group by striker order by sum(runs_scored) desc) as a1 , player where player.Player_Id = a1.striker 
 group by a1.striker,a1.sum,player_name order by a1.sum desc;
 
-drop view runs_in_balls;
+drop view runs_in_ball;
