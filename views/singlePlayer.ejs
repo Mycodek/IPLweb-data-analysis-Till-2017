@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ESD::<%=title%></title>
+    <%- include('./partials/header'); -%>
+    <script>
+        $('.select2').select2();
+    </script>
+    <style>
+        .floatLeft { width: 50%; float: left; }
+        .floatRight {width: 50%; float: right; }  
+        p.big {
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body style="width:100%;border:5px solid rgb(145, 38, 38);">
+    <%- include('./partials/nevbar'); -%>
+    <%- include('./partials/PlayerProfile'); -%>
+   <br><br><br><br><br><br><br><br>
+    <div>
+        <p class ="big">    
+        <header>
+            <h3><b>STATISTICS</b></h3>
+        </header>
+        </p>
+    </div>
+    <div style="text-align:center">
+        <h4>All <%=title%> </h4>
+    </div>
+    <br>
+    <div class="center">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">Player_ID</th>
+                <th scope="col">Player_Name</th>
+                <th scope="col">DOB</th>
+                <th scope="col">Batting</th>
+                <th scope="col">Bowling</th>
+                <th scope="col">Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% resTable.forEach(function(posts){ %>
+                    <tr>
+                        <td><%= posts.player_id %></td>
+                        <td><%= posts.player_name %></td>
+                        <td><%= posts.dob %></td>
+                        <td><%= posts.batting_hand %></td>
+                        <td><%= posts.bowling_skill %></td>
+                        <td><%= posts.country_name%></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+<%- include('./partials/script'); -%>
+</html>
