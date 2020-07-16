@@ -1,0 +1,12 @@
+{
+    "name": "ipl",
+    "description": "Database Applicatoin for ipl data analysis between 2008 to 2017",
+    "repository": "https://github.com/Mycodek/IPLweb-data-analysis-Till-2017.git",
+    "success_url": "/welcome",
+    "keywords": [
+        "node",
+        "express",
+        "HTML5"
+      ],
+    "image": "heroku/nodejs"
+}

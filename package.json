@@ -1,10 +1,11 @@
 {
-  "name": "soccer",
+  "name": "ipl",
   "version": "1.0.0",
-  "description": "dbms project",
-  "main": "index.js",
+  "description": "Database Applicatoin using express",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -12,7 +13,8 @@
   },
   "keywords": [
     "node",
-    "npm"
+    "npm",
+    "heroku"
   ],
   "author": "kailash",
   "license": "ISC",
@@ -25,8 +27,11 @@
     "body-parser": "^1.19.0",
     "cat-me": "^1.0.3",
     "ejs": "^3.0.1",
-    "ejs-lint": "^1.0.1",
+    "ejs-lint": "^1.1.0",
     "express": "^4.17.1",
     "pg": "^7.18.2"
+  },
+  "engines": {
+    "node": "^8.17.0"
   }
 }
