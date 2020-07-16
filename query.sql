@@ -123,25 +123,72 @@ ALTER TABLE TEAM DROP TEAM_SK;
 
 ALTER TABLE PLAYER DROP PLAYER_SK;
 
-CREATE TABLE VENUE AS select Distinct(Venue_Name),City_Name,Country_Name from match order by country_name,City_name;  
+CREATE TABLE GROUND AS SELECT Distinct(venue_Name),City_Name,Country_Name FROM match order by country_name,City_name;  
+
+CREATE INDEX ground_index ON Ground(Venue_Name);
 
 ALTER TABLE match drop Country_id,drop Country_Name,drop City_Name, drop Match_SK;
 
-Create Table temp_table AS select match_id,player_id,role_desc,player_team from player_match;
+Create Table temp_table AS SELECT match_id,player_id,role_desc,player_team FROM player_match;
 
 drop table player_match;
 
 ALTER TABLE temp_table RENAME TO player_match;
 
-CREATE TABLE match_by_team AS SELECT Match_id,Innings_No,Team_batting,Team_bowling from ball_by_ball;
+CREATE TABLE match_by_team AS SELECT Match_id,Innings_No,Team_batting,Team_bowling FROM ball_by_ball;
 
-CREATE TABLE temp2_table AS SELECT match_id, over_id, ball_id, innings_no, striker_batting_position, extra_type,runs_scored, extra_runs, out_type, striker, non_striker, bowler, player_out,fielders as fielder,Bowler_Wicket from ball_by_ball;
+CREATE TABLE temp2_table AS SELECT match_id, over_id, ball_id, innings_no, striker_batting_position, extra_type,runs_scored, extra_runs, out_type, striker, non_striker, bowler, player_out,fielders AS fielder,Bowler_Wicket FROM ball_by_ball;
 
 drop table ball_by_ball;
 
 ALTER TABLE temp2_table RENAME TO ball_by_ball;
 
--- xtra queries
-SELECT country_name
-FROM player
-GROUP BY country_name;
+
+SELECT * 
+FROM (
+    SELECT bowler, ROUND(
+                SUM(CASE extra_type WHEN 'Wides' THEN 0 ELSE (
+                    CASE extra_type WHEN 'wides' THEN 0 ELSE (
+                        CASE extra_type WHEN 'Noballs' THEN 0 ELSE (
+                            CASE extra_type WHEN 'noballs' THEN 0 ELSE 1 END
+                        )END
+                    )END
+                )END
+            ):: DECIMAL/6,1) AS over,
+            SUM(bowler_wicket) AS wickets, SUM(runs_scored) AS run,
+            SUM(extra_runs) AS extra_runs,
+            SUM(CASE extra_type WHEN 'byes' THEN extra_runs ELSE (
+                    CASE extra_type WHEN 'Byes' THEN extra_runs ELSE (
+                        CASE extra_type WHEN 'legbyes' THEN extra_runs ELSE (
+                            CASE extra_type WHEN 'Legbyes' THEN extra_runs ELSE(
+                                CASE extra_type WHEN 'panalty' THEN extra_runs ELSE 0 END
+                            )END
+                        )END
+                    )END
+                )END ) AS bp_extra,
+            SUM(CASE extra_type WHEN 'wides' THEN 1 
+            ELSE (CASE extra_type WHEN 'Wides' THEN 1 ELSE 0 END) END) AS wides, 
+            SUM(CASE extra_type WHEN 'Noballs' THEN 1 ELSE 0 END) AS nb , 
+            ROUND(SUM(runs_scored+extra_runs) :: DECIMAL / ROUND(SUM 
+            (COALESCE(CASE extra_type WHEN 'No Extras' THEN 1 ELSE NULL END,CASE extra_type WHEN 'legbyes' THEN 1 ELSE 0 END))::DECIMAL /6,1) , 2 ) AS eco 
+    FROM ball_by_ball WHERE match_id = '335987' AND innings_no = '1' GROUP BY bowler) AS foo 
+LEFT OUTER JOIN player ON player.player_id = foo.bowler;
+
+SELECT * 
+FROM player 
+INNER JOIN 
+(SELECT striker,SUM(runs_scored) AS run,
+    SUM(CASE extra_type WHEN 'Wides' THEN 0 ELSE (
+            CASE extra_type WHEN 'wides' THEN 0 ELSE (
+                CASE extra_type WHEN 'Noballs' THEN 0 ELSE (
+                    CASE extra_type WHEN 'noballs' THEN 0 ELSE 1 END
+                )END
+            )END
+        )END
+    ) AS balls,
+ SUM(CASE runs_scored WHEN 4 THEN 1 ELSE 0 END) AS fours, 
+ SUM(CASE runs_scored WHEN 6 THEN 1 ELSE 0 END)  AS sixes ,
+ round(SUM(runs_scored) :: DECIMAL / count(CONCAT(over_id,ball_id,innings_no)) , 2 )*100 AS sr, 
+ SUM(extra_runs) AS extra, count(player_out) AS outCount 
+ FROM ball_by_ball 
+ WHERE match_id = '335987' AND innings_no ='1' GROUP BY striker) AS foo ON foo.striker = player.player_id;

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Homepage</title>
+    <%- include('./partials/header'); -%>
+    <style>
+    tbody {
+    display:block;
+    height:730px;
+    overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;/* even columns width , fix width of table too*/
+    }
+    thead {
+        width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+    }
+    table {
+        width:400px;
+    }
+    </style>
+</head>
+<body style="width:100%;">
+    <%- include('./partials/nav/Vnav'); -%>
+    <br>
+    <h3 style="text-color:#727478;text-align: center;">All Venue of IPL matches From 2008 to 2017</h3>
+    <br>
+    <div class="center">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">Stadium</th>
+                <th scope="col">City</th>
+                <th scope="col">Country</th>
+                <th scope="col">Total Matches</th>
+                <th scope="col">WinChoseToBat</th>
+                <th scope="col">% WinChoseToBat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% allVenue.forEach(function(posts){ %>
+                    <tr>
+                        <td><%= posts.venue_name %></td>
+                        <td><%= posts.city_name %></td>
+                        <td><%= posts.country_name %></td>
+                        <td><%= posts.total_venue_matches %></td>
+                        <td><%= posts.winning_firstinnings_matches %></td>
+                        <td><%= posts.perc_battingfirst%></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+<%- include('./partials/script'); -%>
+</html>

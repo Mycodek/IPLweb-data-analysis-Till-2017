@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Single Team data</title>
+    <%- include('./partials/header'); -%>
+    <script>
+        $('.select2').select2();
+    </script>
+    <style>
+    tbody {
+    display:block;
+    height:550px;
+    overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;/* even columns width , fix width of table too*/
+    }
+    thead {
+        width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+    }
+    table {
+        width:400px;
+    }
+    </style>
+</head>
+<body style="width:100%;">
+    <%- include('./partials/nav/Tnav'); -%>
+    <br><br>
+    <h2 style="text-color:#727478;text-align: center;"> <%= teamName %> : Stats & Players From 2008 to 2017</h2>
+    <br>
+    <div class="row" style="justify-content:space-around;">
+        <div style="width:48%">
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Season</th>
+                        <th scope="col">All Matches</th>
+                        <th scope="col">Won Matches</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let i=1 %>
+                        <% statsTable.forEach(function(stt){ %>
+                            <tr>
+                                <th scope="row"><%=i%></th>
+                                <td><%= stt.season_year %></td>
+                                <td><%= stt.total_matches %></td>
+                                <td><%= stt.winning_matches %></td>
+                            </tr>
+                            <% i = i+1 %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="width:48%">
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Player Name</th>
+                        <th scope="col">#Matches For Team</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let num = 1 %>
+                        <% player_res.forEach(function(stt){ %>
+                            <tr>
+                                <td scope="row"><%=num%></td>
+                                <td>    <a class="nav-link" href='/Player/<%= stt.player_name%>' >
+                                    <h6 style="color:#426b7d;"> <%= stt.player_name %> </h6></a></td>
+                                <td><%= stt.count %></td>
+                            </tr>
+                            <% num = num + 1 %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('./partials/script'); -%>
+</html>

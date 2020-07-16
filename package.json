@@ -21,6 +21,7 @@
   },
   "homepage": "https://https://github.com/Mycodek/IPLweb-data-analysis-Till-2017#readme",
   "dependencies": {
+    "alert-node": "^2.1.4",
     "body-parser": "^1.19.0",
     "cat-me": "^1.0.3",
     "ejs": "^3.0.1",

@@ -1,0 +1,43 @@
+<script type="text/javascript">
+   function myNewRoutePath(){
+      var st = document.getElementById("name").value;
+      location.replace("/Player/"+st); 
+   }
+</script>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Indian Premier League (IPL) dataset (TILL 2017)</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Teams">Teams</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/Venue">Stadium</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/Matches">Matches</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" placeholder="Search Player" id="name" list="pnm">
+      <datalist id="pnm">
+            <% allp.forEach((p) => { %>
+              <option value='<%= p.player_name %>'><%= p.player_name %></option>
+            <% }) %>
+      </datalist>
+    </form>
+    <button class="btn btn-outline-success my-2 my-sm-0" onclick="myNewRoutePath()">Search</button>
+  </div>
+</nav>

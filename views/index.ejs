@@ -6,77 +6,160 @@
     <script>
         $('.select2').select2();
     </script>
-    
+    <script>
+    function hrefText(arg){
+        reff = "./Player/"+arg;
+        return reff;
+    }
+    function asd(){
+        var x = document.getElementById('name').value;
+        location.replace('/Player/'+x);
+    }
+    </script>
+    <style>
+    tbody {
+    display:block;
+    height:730px;
+    overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;/* even columns width , fix width of table too*/
+    }
+    thead {
+        width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+    }
+    </style>
 </head>
-<body style="width:100%;border:5px solid rgb(145, 38, 38);">
-    <%- include('./partials/nevbar'); -%>
+<body style="width:100%;">
+    <%- include('./partials/nav/Inav'); -%>
+    <div class="row" style="justify-content:space-around;">
+        <div style="width:16%;margin-left:20px;background-color:#F8F8F8">
+            <div class="center">
+                <div style="margin-top:20px;background-color:blue;width:100%">
+                    <form class="col-md" style="float:left" action="/search-multi-player" method="POST">
+                        <div>
+                            <select class="form-control select2" style="margin-top:20px" name="country_name">
+                            <option><%= IndexData_obj.country_name %></option>
+                            <% if(IndexData_obj.country_name != "All Countries") {%>
+                                <option>All Countries</option>
+                            <% } %>
+                            <% allCountry.forEach(function(country){ %>
+                                <option><%=country.country_name%></option>
+                            <% }) %>
+                            </select>
 
-    <div style="margin-top:20px;background-color:blue;width:100%">
-            <form class="col-md-2" style="float:left" action="/search-multi-player" method="POST">
-                <div class="row">
-                    <select class="form-control select2" name="country_name">
-                    <option>All Countries</option>
-                    <% allCountry.forEach(function(country){ %>
-                        <option><%=country.country_name%></option>
-                    <% }) %>
-                    </select>
-    
-                    <select class="form-control select2" name="team_name">
-                    <option>All Teams</option>
-                    <% allTeam.forEach(function(tm){ %>
-                        <option><%=tm.team_name%></option>
-                    <% }) %>
-                    </select>
-    
-                    <select class="form-control select2" name="season_year">
-                    <option>All Seasons</option>
-                    <% allSeason.forEach(function(yr){ %>
-                        <option><%=yr.season_year%></option>
-                    <% }) %>
-                    </select>
-    
-                    <select class="form-control select2" name="property">
-                    <option>Six/Four/Wickets</option>
-                    <option>Most_Six_Hitter</option> 
-                    <option>Most_Four_Hitter</option> 
-                    <option>Most_Wickets_Taker</option>
-                    </select>
-                    <button class="form-control select2 btn btn-outline-success my-2 my-sm-0"
-                        style="background-color:#daf0b1"
-                    type="submit">Search</button>
+                            <select class="form-control select2" style="margin-top:20px" name="team_name">
+                            <option><%= IndexData_obj.team_name %></option>
+                            <% if(IndexData_obj.team_name != "All Teams") {%>
+                                <option>All Teams</option>
+                            <% } %>
+                            <% allTeam.forEach(function(tm){ %>
+                                <option><%=tm.team_name%></option>
+                            <% }) %>
+                            </select>
+
+                            <select class="form-control select2" style="margin-top:20px" name="season_year">
+                            <option><%= IndexData_obj.season_year %></option>
+                            <% if(IndexData_obj.season_year != "All Seasons") {%>
+                                <option>All Seasons</option>
+                            <% } %>
+                            <% allSeason.forEach(function(yr){ %>
+                                <option><%=yr.season_year%></option>
+                            <% }) %>
+                            </select>
+
+                            <select class="form-control select2" style="margin-top:20px" name="property">
+                            <option><%= IndexData_obj.property %></option>
+                            <% if(IndexData_obj.property != "Field Not Applied") {%>
+                                <option>Field Not Applied</option>
+                            <% } %>
+                            <option>Most_Six_Hitter</option> 
+                            <option>Most_Four_Hitter</option> 
+                            <option>Most_Wickets_Taker</option>
+                            </select>
+                            <h6 style="color:#585858">This field is only useful with season year, irrespective of country name and team</h6>
+                            <br><br><br>
+                            <button class="form-control select2 btn btn-outline-success my-2 my-sm-0"
+                                style="background:#606060;"
+                            type="submit">Search</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+        </div>
+
+        <div style="width:75%;margin-top:20px;margin-right:10px">
+            <div class="center">
+                <% if (tabChange == true) { %>
+                    <div class="center">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Player_Name</th>
+                                <th scope="col">count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% i = 1 %>
+                                <% allPlayer.forEach(function(posts){ %>
+                                    <tr>
+                                        <td><%= i %></td>
+                                        <td>
+                                        <a class="nav-link" href='/Player/<%= posts.player_name%>' >
+                                        <h6 style="color:#426b7d;"> <%= posts.player_name %> </h6></a></td>
+                                        <td><%= posts.countx %></td>
+                                    </tr>
+                                    <% i = i+1 %>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <div class="center">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Player_Name</th>
+                                <th scope="col">DOB</th>
+                                <th scope="col">Batting</th>
+                                <th scope="col">Bowling</th>
+                                <th scope="col">Country</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% i = 1 %>
+                                <% allPlayer.forEach(function(posts){ %>
+                                    <tr>
+                                        <td><%= i %></td>
+                                        <td>    <a class="nav-link" href='/Player/<%= posts.player_name%>' >
+                                                <h6 style="color:#426b7d;"> <%= posts.player_name %> </h6></a></td>
+                                        <td><%= posts.dob %></td>
+                                        <td><%= posts.batting_hand %></td>
+                                        <td><%= posts.bowling_skill %></td>
+                                        <td><%= posts.country_name%></td>
+                                    </tr>
+                                    <% i = i+1 %>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+            </div>
+            <div style="text-align:center">
+                <h4>Players Data</h4>
+            </div>
+        </div>
     </div>
-    <div style="text-align:center">
-        <h4>All Players</h4>
-    </div>
+    
+    
+    
     <br>
-    <div class="center">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                <th scope="col">Player_ID</th>
-                <th scope="col">Player_Name</th>
-                <th scope="col">DOB</th>
-                <th scope="col">Batting</th>
-                <th scope="col">Bowling</th>
-                <th scope="col">Country</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% allPlayer.forEach(function(posts){ %>
-                    <tr>
-                        <td><%= posts.player_id %></td>
-                        <td><%= posts.player_name %></td>
-                        <td><%= posts.dob %></td>
-                        <td><%= posts.batting_hand %></td>
-                        <td><%= posts.bowling_skill %></td>
-                        <td><%= posts.country_name%></td>
-                    </tr>
-                <% }) %>
-            </tbody>
-        </table>
-    </div>
+        
+        
     
 </body>
 <%- include('./partials/script'); -%>

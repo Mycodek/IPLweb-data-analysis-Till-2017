@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Matches</title>
+    <%- include('./partials/header'); -%>
+    <script>
+        $('.select2').select2();
+    </script>
+    <script>
+    function hrefText(arg){
+        reff = "./Player/"+arg;
+        return reff;
+    }
+    function asd(){
+        var x = document.getElementById('name').value;
+        location.replace('/Player/'+x);
+    }
+    </script>
+    <style>
+    ::-webkit-scrollbar {
+    width: 15px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+    background: #929da6;
+    border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
+    }
+    tbody {
+    display:block;
+    height:730px;
+    overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;/* even columns width , fix width of table too*/
+    }
+    thead {
+        width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+    }
+    
+    </style>
+</head>
+<body style="width:100%;">
+    <%- include('./partials/nav/Mnav'); -%>
+    <div class="row" style="justify-content:space-around;">
+        <div style="width:16%;margin-left:20px;background-color:#F8F8F8">
+            <div class="center">
+                <div style="margin-top:20px;background-color:blue;width:100%">
+                    <form class="col-md" style="float:left" action="/search-match-list" method="POST">
+                        <div>
+                            <select class="form-control select2" style="margin-top:20px" name="team_name">
+                            <option><%= MatchIndexData_obj.team_name %></option>
+                            <% if(MatchIndexData_obj.team_name != "All Teams") {%>
+                                <option>All Teams</option>
+                            <% } %>
+                            <% allTeam.forEach(function(tm){ %>
+                                <option><%=tm.team_name%></option>
+                            <% }) %>
+                            </select>
+
+                            <select class="form-control select2" style="margin-top:20px" name="season_year">
+                            <option><%= MatchIndexData_obj.season_year %></option>
+                            <% if(MatchIndexData_obj.season_year != "All Seasons") {%>
+                                <option>All Seasons</option>
+                            <% } %>
+                            <% allSeason.forEach(function(yr){ %>
+                                <option><%=yr.season_year%></option>
+                            <% }) %>
+                            </select>
+
+                            <select class="form-control select2" style="margin-top:20px" name="venue_name">
+                            <option><%= MatchIndexData_obj.venue_name %></option>
+                            <% if(MatchIndexData_obj.venue_name != "All Venue") {%>
+                                <option>All Venue</option>
+                            <% } %>
+                            <% AllVenue.forEach(function(ven){ %>
+                                <option><%=ven.venue_name%></option>
+                            <% }) %>
+                            </select>
+
+                            <br><br>
+                            <button class="form-control select2 btn btn-outline-success my-2 my-sm-0"
+                                style="background-color:#daf0b1"
+                            type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div style="width:78%;margin-top:20px;margin-right:10px">
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Season</th>
+                        <th scope="col">Winner</th>
+                        <th scope="col">Runner-up</th>
+                        <th scope="col">Venue</th>
+                        <th scope="col">ManOMatch</th>
+                        <th scope="col">Winning Margin</th>
+                        <th scope="col">details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% i = 1 %>
+                        <% allMatches.forEach(function(posts){ %>
+                            <tr>
+                                <td><%= i %></td>
+                                <td><%= posts.season_year %> </td>
+                                <% if(posts.team1 == posts.match_winner) { %>
+                                    <td><a class="nav-link" href='./TeamData/<%= posts.team1%>'>
+                                    <h6 style="color:#426b7d;"> <%= posts.team1 %></h6></a></td>
+                                    <td><a class="nav-link" href='./TeamData/<%= posts.team2%>'>
+                                    <h6 style="color:#426b7d;"> <%= posts.team2 %> </h6></a></td>
+                                <%}else{%>
+                                    <td><a class="nav-link" href='./TeamData/<%= posts.team2%>'>
+                                    <h6 style="color:#426b7d;"> <%= posts.team2 %> </h6></a></td>
+                                    <td><a class="nav-link" href='./TeamData/<%= posts.team1%>'>
+                                    <h6 style="color:#426b7d;"> <%= posts.team1 %> </h6></a></td>
+                                <%}%>
+                                <td><%= posts.venue_name %></td>
+                                <td><%= posts.manofmach %></td>
+                                <td><%= posts.win_margin  %> <%= posts.win_type%></td>
+                                <td><a class="nav-link" href='./Match/<%= posts.match_id%>'>
+                                <h6 style="color:#426b7d;"> click here </h6></a></td>
+                            </tr>
+                            <% i = i+1 %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align:center">
+                <h4>Matches Data</h4>
+            </div>
+        </div>
+    </div>
+    <br>
+        
+</body>
+<%- include('./partials/script'); -%>
+</html>

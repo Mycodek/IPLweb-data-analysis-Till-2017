@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Single Team data</title>
+    <%- include('./partials/header'); -%>
+    <script>
+        $('.select2').select2();
+    </script>
+    <style>
+    tbody {
+    display:block;
+    height:650px;
+    overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;/* even columns width , fix width of table too*/
+    }
+    thead {
+        width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+    }
+    table {
+        width:400px;
+    }
+    </style>
+</head>
+<body class="center" style="width:99%;margin-left:3px;">
+    <%- include('./partials/nav/Mnav'); -%>
+    <br>
+    <hr>
+    <div style="margin-left:10px;">
+        <h6> <%= Mdata.toss_winner %> selected to 
+        <% if( Mdata.toss_name == 'field'){%> Bowl <%}else{%> Bat <%}%>fisrt</h6>
+        <h2> <%= Mdata.match_winner %> win by <%= Mdata.win_margin %> <%= Mdata.win_type %> </h2>
+        <h4> Location : <%= Mdata.venue_name %> , <%= bdata.city %></h4>
+        <h5> Data : <%= Mdata.match_date %> (mm/dd/yyyy)</h6></h5>
+    </div>
+    <hr>
+    <h3 style="color:#686868;">1st Inning</h3>
+    <br>
+    <div class="row" style="justify-content:space-around;background-color:#F5F5F5;">
+        <div style="width:48%">
+            <div class="row" style="justify-content:space-between;">
+                <h5 style="margin-left:20px"> <%= bdata.name1 %></h5>
+                <h5 style="margin-right:40px"> <%= bdata.target %>/<%= bdata.out1 %></h5>
+            </div>
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Batsman</th>
+                        <th scope="col">R</th>
+                        <th scope="col">B</th>
+                        <th scope="col">4s</th>
+                        <th scope="col">6s</th>
+                        <th scope="col">SR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% bdata.tab1.forEach(function(stt){ %>
+                            <tr>
+                                <td><%= stt.player_name %></td>
+                                <td><b><%= stt.run %></b></td>
+                                <td><%= stt.balls %></td>
+                                <td><%= stt.fours %></td>
+                                <td><%= stt.sixes %></td>
+                                <td><%= stt.sr %></td>
+                            </tr>
+                        <% }) %>
+                        <tr style="background-color:#888888">
+                            <td>Extras</td>
+                            <td><%=bdata.extra1%></td>
+                        </tr>
+                        <tr style="background-color:#D6DBDF">
+                            <td>Total</td>
+                            <td><%=bdata.target%></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="width:48%">
+            <div class="row">
+                <h5 style="margin-left:20px;align:center">___________________________________________________________</h5>
+            </div>
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Bowler</th>
+                        <th scope="col">O</th>
+                        <th scope="col">R</th>
+                        <th scope="col">W</th>
+                        <th scope="col">WD</th>
+                        <th scope="col">ND</th>
+                        <th scope="col">ECO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% bdata.bowlerIn1.forEach(function(stt){ %>
+                            <tr>
+                                <td><%= stt.player_name %></td>
+                                <td><b><%= stt.over %></b></td>
+                                <td><%= Number(stt.runs) + Number(stt.extra_runs) - Number(stt.bp_extra) %></td>
+                                <td><%= stt.wickets %></td>
+                                <td><%= stt.wides %></td>
+                                <td><%= stt.nb %></td>
+                                <td><%= stt.eco %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h3 style="color:	#686868;">2nd Inning</h3>
+    <br>
+    <div class="row" style="justify-content:space-around;background-color:#F5F5F5;">
+        <div style="width:48%">
+            <div class="row" style="justify-content:space-between;">
+                <h5 style="margin-left:20px"> <%= bdata.name2 %></h5>
+                <h5 style="margin-right:40px"> <%= bdata.cover %>/<%= bdata.out2 %></h5>
+            </div>
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Player</th>
+                        <th scope="col">R</th>
+                        <th scope="col">B</th>
+                        <th scope="col">4s</th>
+                        <th scope="col">6s</th>
+                        <th scope="col">SR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% bdata.tab2.forEach(function(stt){ %>
+                            <tr>
+                                <td><%= stt.player_name %></td>
+                                <td><b><%= stt.run %></b></td>
+                                <td><%= stt.balls %></td>
+                                <td><%= stt.fours %></td>
+                                <td><%= stt.sixes %></td>
+                                <td><%= stt.sr %></td>
+                            </tr>
+                        <% }) %>
+                        <tr style="background-color:#888888">
+                            <td>Extras</td>
+                            <td><%=bdata.extra2%></td>
+                        </tr>
+                        <tr style="background-color:#D6DBDF">
+                            <td>Total</td>
+                            <td><%=bdata.cover%></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="width:48%">
+            <div class="row">
+                <h5 style="margin-left:20px;align:center">___________________________________________________________</h5>
+            </div>
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">Player</th>
+                        <th scope="col">O</th>
+                        <th scope="col">R</th>
+                        <th scope="col">W</th>
+                        <th scope="col">WD</th>
+                        <th scope="col">ND</th>
+                        <th scope="col">ECO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% bdata.bowlerIn2.forEach(function(stt){ %>
+                            <tr>
+                                <td><%= stt.player_name %></td>
+                                <td><b><%= stt.over %></b></td>
+                                <td><%= Number(stt.runs) + Number(stt.extra_runs) - Number(stt.bp_extra) %></td>
+                                <td><%= stt.wickets %></td>
+                                <td><%= stt.wides %></td>
+                                <td><%= stt.nb %></td>
+                                <td><%= stt.eco %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h3 style="color:	#686868;">Teams Squads</h3>
+    <div class="row" style="justify-content:space-around;background-color:#F5F5F5;">
+        <div style="width:48%">
+            <h5> <%= Mdata.team1 %></h5>
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Player</th>
+                        <th scope="col">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let i=1 %>
+                        <% tm1.forEach(function(stt){ %>
+                            <tr>
+                                <td scope="row"><%=i%></td>
+                                <td><%= stt.player_name %></td>
+                                <td><%= stt.role_desc %></td>
+                            </tr>
+                            <% i = i+1 %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="width:48%">
+            <h5> <%= Mdata.team2 %></h5>
+            <div class="center">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Player</th>
+                        <th scope="col">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let j=1 %>
+                        <% tm2.forEach(function(stt){ %>
+                            <tr>
+                                <td scope="row"><%=j%></td>
+                                <td><%= stt.player_name %></td>
+                                <td><%= stt.role_desc %></td>
+                            </tr>
+                            <% j = j+1 %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('./partials/script'); -%>
+</html>
