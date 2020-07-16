@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // app.use(bodyParser.text({ type: 'text/html' }));
 
 // client connection
-// let port = 8800;
+let port = 8800;
 // const client = new Client({
 //     // connectionString : connection_String
 //     user: 'group_26',
@@ -474,5 +474,5 @@ app.get("*",(req,res)=>{
 app.listen(port,function(){
     // catme();
     // console.log(catme());
-    console.log("Server started listining at port :"+client.port);
+    console.log("Server started listining at port :"+port);
 });
