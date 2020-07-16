@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // app.use(bodyParser.text({ type: 'text/html' }));
 
 // client connection
-let port = 8800;
+// let port = 8800;
 // const client = new Client({
 //     // connectionString : connection_String
 //     user: 'group_26',
@@ -31,10 +31,10 @@ let port = 8800;
 // });
 const client = new Client({
     // connectionString : connection_String
-    user: 'postgres',
-    host: 'localhost',
-    database: 'mydatabase',
-    password: 'psqlpsql',
+    user: 'yoziwaaihaljqv',
+    host: 'ec2-52-204-232-46.compute-1.amazonaws.com',
+    database: 'd7tkene6r3u0ag',
+    password: 'af2c4b97b929197cc6dbf9a54e3c0555a441711ee682d8c717e2f0a8b6fdd3e2',
     port: 5432,
 });
 client.connect();
@@ -474,5 +474,5 @@ app.get("*",(req,res)=>{
 app.listen(port,function(){
     // catme();
     // console.log(catme());
-    console.log("Server started listining at port :"+port);
+    console.log("Server started listining at port :"+client.port);
 });
