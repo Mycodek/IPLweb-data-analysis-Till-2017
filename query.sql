@@ -4,7 +4,7 @@ CREATE TABLE Team(
     Team_Name varchar
 );
 
-\copy Team(Team_SK,Team_ID,Team_Name) FROM '/home/kailash/Desktop/6th_Sem/dbms/Project/ipl-data-till-2017/Team.csv' DELIMITER ',' CSV HEADER;
+\copy Team(Team_SK,Team_ID,Team_Name) FROM './ipl-data-till-2017/Team.csv' DELIMITER ',' CSV HEADER;
 
 CREATE TABLE Player_match(
     Player_match_SK INTEGER,
@@ -29,7 +29,7 @@ CREATE TABLE Player_match(
     Opposit_keeper VARCHAR
 );
 
-\copy Player_match(Player_match_SK, PlayerMatch_key, Match_Id, Player_Id, Player_Name,DOB, Batting_hand,Bowling_skill,Country_Name, Role_Desc ,Player_team ,Opposit_Team ,Season_year, is_manofThematch, Age_As_on_match,IsPlayers_Team_won ,Player_Captain,Opposit_captain,Player_keeper,Opposit_keeper) FROM '/home/kailash/Desktop/6th_Sem/dbms/Project/ipl-data-till-2017/Player_match.csv' DELIMITER ',' CSV HEADER;
+\copy Player_match(Player_match_SK, PlayerMatch_key, Match_Id, Player_Id, Player_Name,DOB, Batting_hand,Bowling_skill,Country_Name, Role_Desc ,Player_team ,Opposit_Team ,Season_year, is_manofThematch, Age_As_on_match,IsPlayers_Team_won ,Player_Captain,Opposit_captain,Player_keeper,Opposit_keeper) FROM './ipl-data-till-2017/Player_match.csv' DELIMITER ',' CSV HEADER;
 
 CREATE TABLE Player(
     PLAYER_SK integer,
@@ -41,7 +41,7 @@ CREATE TABLE Player(
     Country_Name VARCHAR
 );
 
-\copy Player( PLAYER_SK,Player_Id,Player_Name,DOB,Batting_hand, Bowling_skill,Country_Name ) FROM '/home/kailash/Desktop/6th_Sem/dbms/Project/ipl-data-till-2017/Player.csv' DELIMITER ',' CSV HEADER;
+\copy Player( PLAYER_SK,Player_Id,Player_Name,DOB,Batting_hand, Bowling_skill,Country_Name ) FROM './ipl-data-till-2017/Player.csv' DELIMITER ',' CSV HEADER;
 
 CREATE TABLE Match(
     Match_SK INTEGER,
@@ -63,7 +63,7 @@ CREATE TABLE Match(
     Country_id integer
 );
 
-\copy Match( Match_SK, match_id,Team1,Team2,match_date, Season_Year , Venue_Name , City_Name , Country_Name,Toss_Winner , match_winner , Toss_Name ,Win_Type , Outcome_Type ,ManOfMach , Win_Margin ,Country_id ) FROM '/home/kailash/Desktop/6th_Sem/dbms/Project/ipl-data-till-2017/Match.csv' DELIMITER ',' CSV HEADER;
+\copy Match( Match_SK, match_id,Team1,Team2,match_date, Season_Year , Venue_Name , City_Name , Country_Name,Toss_Winner , match_winner , Toss_Name ,Win_Type , Outcome_Type ,ManOfMach , Win_Margin ,Country_id ) FROM './ipl-data-till-2017/Match.csv' DELIMITER ',' CSV HEADER;
 
 CREATE TABLE Ball_By_Ball(
     MatcH_id INTEGER,
@@ -116,7 +116,7 @@ CREATE TABLE Ball_By_Ball(
     MatchDateSK VARCHAR
 );
 
-\copy Ball_By_Ball(MatcH_id,Over_id,Ball_id,Innings_No,Team_Batting,Team_Bowling,Striker_Batting_Position,Extra_Type,Runs_Scored,Extra_runs,Wides,Legbyes,Byes,Noballs,Penalty,Bowler_Extras,Out_type,Caught,Bowled,Run_out,LBW,Retired_hurt,Stumped,caught_and_bowled,hit_wicket,ObstructingFeild,Bowler_Wicket,Match_Date,Season,Striker,Non_Striker,Bowler,Player_Out,Fielders,Striker_match_SK,StrikerSK,NonStriker_match_SK,NONStriker_SK,Fielder_match_SK,Fielder_SK,Bowler_match_SK,BOWLER_SK,PlayerOut_match_SK,BattingTeam_SK,BowlingTeam_SK,Keeper_Catch,Player_out_sk,MatchDateSK) FROM '/home/kailash/Desktop/6th_Sem/dbms/Project/ipl-data-till-2017/Ball_By_Ball.csv' DELIMITER ',' CSV HEADER;
+\copy Ball_By_Ball(MatcH_id,Over_id,Ball_id,Innings_No,Team_Batting,Team_Bowling,Striker_Batting_Position,Extra_Type,Runs_Scored,Extra_runs,Wides,Legbyes,Byes,Noballs,Penalty,Bowler_Extras,Out_type,Caught,Bowled,Run_out,LBW,Retired_hurt,Stumped,caught_and_bowled,hit_wicket,ObstructingFeild,Bowler_Wicket,Match_Date,Season,Striker,Non_Striker,Bowler,Player_Out,Fielders,Striker_match_SK,StrikerSK,NonStriker_match_SK,NONStriker_SK,Fielder_match_SK,Fielder_SK,Bowler_match_SK,BOWLER_SK,PlayerOut_match_SK,BattingTeam_SK,BowlingTeam_SK,Keeper_Catch,Player_out_sk,MatchDateSK) FROM './ipl-data-till-2017/Ball_By_Ball.csv' DELIMITER ',' CSV HEADER;
 
 ALTER TABLE TEAM DROP TEAM_SK;
 
